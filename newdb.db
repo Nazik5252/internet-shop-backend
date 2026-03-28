@@ -1,0 +1,51 @@
+-- =====================================================
+-- Заполнение базы данных тестовыми данными
+-- =====================================================
+
+USE internet_shop;
+
+-- Добавление пользователей
+INSERT INTO users (username, email, password_hash, full_name, role) VALUES
+('admin', 'admin@shop.com', '$2y$10$hash_here', 'Администратор', 'admin'),
+('customer1', 'ivan@example.com', '$2y$10$hash_here', 'Иван Петров', 'customer'),
+('customer2', 'maria@example.com', '$2y$10$hash_here', 'Мария Сидорова', 'customer');
+
+-- Добавление категорий
+INSERT INTO categories (name, description, parent_id) VALUES
+('Электроника', 'Смартфоны, ноутбуки и аксессуары', NULL),
+('Одежда', 'Мужская и женская одежда', NULL),
+('Смартфоны', 'Мобильные телефоны', 1),
+('Ноутбуки', 'Портативные компьютеры', 1),
+('Мужская одежда', 'Одежда для мужчин', 2),
+('Женская одежда', 'Одежда для женщин', 2);
+
+-- Добавление товаров
+INSERT INTO products (name, description, price, stock_quantity, category_id, is_active) VALUES
+('iPhone 15 Pro', 'Смартфон Apple с 128GB памяти', 999.99, 50, 3, TRUE),
+('Samsung Galaxy S24', 'Смартфон Samsung с 256GB памяти', 899.99, 30, 3, TRUE),
+('MacBook Air M3', 'Ноутбук Apple 13 дюймов', 1199.99, 20, 4, TRUE),
+('Футболка хлопковая', 'Хлопковая футболка, цвет белый', 19.99, 100, 5, TRUE),
+('Джинсы классические', 'Классические джинсы синего цвета', 49.99, 50, 5, TRUE),
+('Платье летнее', 'Легкое летнее платье', 39.99, 40, 6, TRUE);
+
+-- Добавление корзин
+INSERT INTO carts (user_id, status) VALUES
+(2, 'active'),
+(3, 'active');
+
+-- Добавление позиций в корзину
+INSERT INTO cart_items (cart_id, product_id, quantity, price_at_add) VALUES
+(1, 1, 1, 999.99),
+(1, 4, 2, 19.99),
+(2, 3, 1, 1199.99);
+
+-- Добавление заказов
+INSERT INTO orders (user_id, order_number, total_amount, status, shipping_address, payment_method) VALUES
+(2, 'ORD-2024001', 1039.97, 'paid', 'г. Москва, ул. Примерная, д. 1', 'card'),
+(3, 'ORD-2024002', 1199.99, 'pending', 'г. Санкт-Петербург, ул. Тестовая, д. 10', 'cash');
+
+-- Добавление позиций заказов
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+(1, 1, 1, 999.99),
+(1, 4, 2, 19.99),
+(2, 3, 1, 1199.99);
